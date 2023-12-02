@@ -1,0 +1,26 @@
+﻿@model List<News>
+
+<h1>Список новин</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Назва новини</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var newsItem in Model)
+        {
+            <tr>
+                <td>@newsItem.Title</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Admin", new { id = newsItem.Id })" class="btn btn-primary">Редагувати</a>
+                    <a href="@Url.Action("Delete", "Admin", new { id = newsItem.Id })" class="btn btn-danger">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("Create", "Admin")" class="btn btn-success">Створити нову новину</a>
+<a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Повернутися до головної сторінки</a>

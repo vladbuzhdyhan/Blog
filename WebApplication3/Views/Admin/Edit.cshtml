@@ -1,0 +1,27 @@
+﻿@model News
+<form asp-controller="Admin" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Date" class="control-label"></label>
+        <input asp-for="Date" class="form-control" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FullText" class="control-label"></label>
+        <textarea asp-for="FullText" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="FullText" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="generalImage">Завантажити зображення:</label>
+        <input type="file" id="generalImage" name="generalImage" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Зберегти" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+    </div>
+</form>
