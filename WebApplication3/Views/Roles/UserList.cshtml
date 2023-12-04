@@ -1,7 +1,8 @@
-﻿@model News
+﻿@model IEnumerable<WebApplication3.Models.User>
+
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,25 +35,17 @@
             </div>
         </nav>
     </header>
-    <form asp-controller="Admin" asp-action="Create" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label asp-for="Title">Назва новини</label>
-            <input asp-for="Title" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="Date">Дата новини</label>
-            <input asp-for="Date" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="FullText">Повний текст</label>
-            <textarea asp-for="FullText" class="form-control"></textarea>
-        </div>
-        <div>
-            <label for="generalImage">Завантажити зображення:</label>
-            <input type="file" id="generalImage" name="generalImage" />
-        </div>
-        <button type="submit" class="btn btn-primary">Зберегти</button>
-        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
-    </form>
+    <h2>List of users</h2>
+    <table class="table">
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Manage roles</a>
+                </td>
+            </tr>
+        }
+    </table>
 </body>
 </html>

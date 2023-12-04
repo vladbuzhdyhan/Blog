@@ -1,26 +1,61 @@
 ﻿@model List<News>
 
-<h1>Список новин</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Назва новини</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var newsItem in Model)
-        {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a style="font-size:30px" class="nav-link text-dark text" asp-area="" asp-controller="Home" asp-action="Index">Blog</a>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <p class="nav-link text-dark text">Hi, @User.Identity?.Name!</p>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" asp-controller="Admin" asp-action="Index">
+                                <input class="nav-link text-dark btn" style="box-shadow:none" type="submit" value="News List" />
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" asp-controller="Roles" asp-action="Index">
+                                <input class="nav-link text-dark btn" style="box-shadow:none" type="submit" value="Roles" />
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <h1>Список новин</h1>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@newsItem.Title</td>
-                <td>
-                    <a href="@Url.Action("Edit", "Admin", new { id = newsItem.Id })" class="btn btn-primary">Редагувати</a>
-                    <a href="@Url.Action("Delete", "Admin", new { id = newsItem.Id })" class="btn btn-danger">Видалити</a>
-                </td>
+                <th>Назва новини</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-<a href="@Url.Action("Create", "Admin")" class="btn btn-success">Створити нову новину</a>
-<a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Повернутися до головної сторінки</a>
+        </thead>
+        <tbody>
+            @foreach (var newsItem in Model)
+            {
+                <tr>
+                    <td>@newsItem.Title</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Admin", new { id = newsItem.Id })" class="btn btn-primary">Редагувати</a>
+                        <a href="@Url.Action("Delete", "Admin", new { id = newsItem.Id })" class="btn btn-danger">Видалити</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="@Url.Action("Create", "Admin")" class="btn btn-primary">Створити нову новину</a>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Повернутися до головної сторінки</a>
+</body>
+</html>

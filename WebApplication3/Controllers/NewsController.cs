@@ -14,7 +14,7 @@ namespace WebApplication3.Controllers
             _siteContext = sitecontext;
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(string slug, int id)
         {
             var newsItem = _siteContext.News.FirstOrDefault(n => n.Id == id);
             return View(newsItem);

@@ -15,22 +15,9 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
 }).AddEntityFrameworkStores<SiteContext>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRouting();
 
 var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var roles = new[] { "Admin", "Member" };
-
-    foreach (var role in roles)
-    {
-        if (!await roleManager.RoleExistsAsync(role))
-        {
-            await roleManager.CreateAsync(new IdentityRole(role));
-        }
-    }
-}
 
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
@@ -38,7 +25,11 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
+});
 app.Run();
