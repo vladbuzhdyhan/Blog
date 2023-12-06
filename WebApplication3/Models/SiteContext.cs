@@ -7,5 +7,6 @@ namespace WebApplication3.Models
     {
         public SiteContext(DbContextOptions<SiteContext> options) : base(options) { }
         public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
     }
 }

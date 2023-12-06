@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication3.Models;
 
@@ -11,9 +12,11 @@ using WebApplication3.Models;
 namespace WebApplication3.Migrations
 {
     [DbContext(typeof(SiteContext))]
-    partial class SiteContextModelSnapshot : ModelSnapshot
+    [Migration("20231206194515_Comments")]
+    partial class Comments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,7 +169,7 @@ namespace WebApplication3.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NewsId")
+                    b.Property<int?>("NewsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Sender")
@@ -179,7 +182,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("NewsId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.News", b =>
@@ -329,9 +332,7 @@ namespace WebApplication3.Migrations
                 {
                     b.HasOne("WebApplication3.Models.News", null)
                         .WithMany("Comments")
-                        .HasForeignKey("NewsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NewsId");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.News", b =>

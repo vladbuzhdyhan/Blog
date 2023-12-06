@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/details.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
@@ -55,6 +56,26 @@
         <img src="@Model.ImageUrl" alt="@Model.Title" />
         <p>@Model.Date.ToShortDateString()</p>
         <p>@Model.FullText</p>
+        @foreach(var comment in Model.Comments)
+        {
+            <div class="comment-container">
+                <p class="comment-sender">@comment.Sender</p>
+                <p class="comment-date">@comment.Date</p>
+                <p class="comment-text">@comment.Text</p>
+            </div>
+        }
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <form asp-controller="News" asp-action="AddComment" method="post">
+                <input type="hidden" name="newsId" value="@Model.Id" />
+                <div class="form-group">
+                    <label for="text">Повний текст</label>
+                    <textarea name="text" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+                <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+            </form>
+        }
     </div>
 </body>
 </html>

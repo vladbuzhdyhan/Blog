@@ -38,3 +38,23 @@ a {
     a:hover {
         text-decoration: underline;
     }
+
+.comment-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.comment-sender {
+    font-weight: bold;
+}
+
+.comment-date {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.comment-text {
+    margin-top: 10px;
+}
