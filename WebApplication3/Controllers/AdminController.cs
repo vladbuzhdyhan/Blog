@@ -25,8 +25,10 @@ namespace WebApplication3.Controllers
 
         public IActionResult Delete(int id)
         {
+            var comments = _siteContext.Comments.Where(x => x.NewsId == id);
             var newsItem = _siteContext.News.FirstOrDefault(n => n.Id == id);
             _siteContext.News.Remove(newsItem);
+            _siteContext.Comments.RemoveRange(comments);
             _siteContext.SaveChanges();
             return RedirectToAction("Index");
         }

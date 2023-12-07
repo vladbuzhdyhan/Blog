@@ -40,11 +40,14 @@
                                     <input class="nav-link text-dark btn" style="box-shadow:none" type="submit" value="Exit the account" />
                                 </form>
                             </li>
-                            <li class="nav-item">
-                                <form method="post" asp-controller="Admin" asp-action="Index">
-                                    <input class="nav-link text-dark btn" style="box-shadow:none" type="submit" value="Admin" />
-                                </form>
-                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <form method="post" asp-controller="Admin" asp-action="Index">
+                                        <input class="nav-link text-dark btn" style="box-shadow:none" type="submit" value="Admin" />
+                                    </form>
+                                </li>
+                            }
                         }
                     </ul>
                 </div>
@@ -55,7 +58,8 @@
         <h1>@Model.Title</h1>
         <img src="@Model.ImageUrl" alt="@Model.Title" />
         <p>@Model.Date.ToShortDateString()</p>
-        <p>@Model.FullText</p>
+        <span style="white-space: pre-line">@Model.FullText</span>
+        <h3 style="margin-top:10px">Comments:</h3>
         @foreach(var comment in Model.Comments)
         {
             <div class="comment-container">
@@ -69,11 +73,10 @@
             <form asp-controller="News" asp-action="AddComment" method="post">
                 <input type="hidden" name="newsId" value="@Model.Id" />
                 <div class="form-group">
-                    <label for="text">Повний текст</label>
+                    <label for="text">Add your comment</label>
                     <textarea name="text" class="form-control"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Зберегти</button>
-                <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+                <button type="submit" class="btn btn-primary">Send</button>
             </form>
         }
     </div>

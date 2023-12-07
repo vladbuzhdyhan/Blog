@@ -21,7 +21,7 @@
                         </li>
                         <li class="nav-item">
                             <form method="post" asp-controller="Admin" asp-action="Index">
-                                <input class="nav-link text-dark btn" style="box-shadow:none" type="submit" value="News List" />
+                                <input class="nav-link text-dark btn" style="box-shadow:none" type="submit" value="Post List" />
                             </form>
                         </li>
                         <li class="nav-item">
@@ -34,11 +34,11 @@
             </div>
         </nav>
     </header>
-    <h1>Список новин</h1>
+    <h1>Posts List</h1>
     <table class="table">
         <thead>
             <tr>
-                <th>Назва новини</th>
+                <th>Post name</th>
                 <th></th>
             </tr>
         </thead>
@@ -48,14 +48,14 @@
                 <tr>
                     <td>@newsItem.Title</td>
                     <td>
-                        <a href="@Url.Action("Edit", "Admin", new { id = newsItem.Id })" class="btn btn-primary">Редагувати</a>
-                        <a href="@Url.Action("Delete", "Admin", new { id = newsItem.Id })" class="btn btn-danger">Видалити</a>
+                        <a href="@Url.Action("Edit", "Admin", new { id = newsItem.Id })" class="btn btn-primary">Change</a>
+                        <a href="@Url.Action("Delete", "Admin", new { id = newsItem.Id })" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <a href="@Url.Action("Create", "Admin")" class="btn btn-primary">Створити нову новину</a>
-    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Повернутися до головної сторінки</a>
+    <a href="@Url.Action("Create", "Admin")" class="btn btn-primary">Create new post</a>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Return</a>
 </body>
 </html>
