@@ -1,9 +1,9 @@
 ﻿@using System.Text.Json;
 @using Microsoft.AspNetCore.Identity;
 @using WebApplication3.Models;
-@model News;
+@model List<News>
 @inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/details.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
@@ -57,31 +56,27 @@
             </div>
         </nav>
     </header>
-    <div style="margin-left: 50px; margin-right: 50px;">
-        <h1>@Model.Title</h1>
-        <img src="@Model.ImageUrl" alt="@Model.Title" />
-        <p>@Model.Date.ToShortDateString()</p>
-        <span style="white-space: pre-line">@Model.FullText</span>
-        <h3 style="margin-top:10px">Comments:</h3>
-        @foreach(var comment in Model.Comments)
-        {
-            <div class="comment-container">
-                <p class="comment-sender">@comment.Sender</p>
-                <p class="comment-date">@comment.Date</p>
-                <p class="comment-text">@comment.Text</p>
-            </div>
-        }
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <form asp-controller="News" asp-action="AddComment" method="post">
-                <input type="hidden" name="newsId" value="@Model.Id" />
-                <div class="form-group">
-                    <label for="text">Add your comment</label>
-                    <textarea name="text" class="form-control"></textarea>
+    <form asp-action="Find" method="post">
+        <div class="form-group">
+            <label for="title">Enter title:</label>
+            <input name="title" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    @foreach (var newsItem in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <img src="@newsItem.ImageUrl" alt="@newsItem.Title" class="card-img-left">
+                    <div class="text-right">
+                        <h5 class="card-title">@newsItem.Title</h5>
+                        <p class="card-text"><small class="text-muted">@newsItem.Date.ToShortDateString()</small></p>
+                        <a href="@Url.Action("Details", "News", new { slug = newsItem.Title, id = newsItem.Id })" class="btn btn-primary">Дізнатися більше...</a>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
-        }
-    </div>
+            </div>
+        </div>
+    }
 </body>
 </html>
