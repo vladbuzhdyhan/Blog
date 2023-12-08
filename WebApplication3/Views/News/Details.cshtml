@@ -63,6 +63,7 @@
         <p>@Model.Date.ToShortDateString()</p>
         <span style="white-space: pre-line">@Model.FullText</span>
         <h3 style="margin-top:10px">Comments:</h3>
+        <h4>@Model.Comments.Count comment(s)</h4>
         @foreach(var comment in Model.Comments)
         {
             <div class="comment-container">
@@ -81,6 +82,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Send</button>
             </form>
+        } else
+        {
+            <h5>Log in to leave a comment!</h5>
         }
     </div>
 </body>
