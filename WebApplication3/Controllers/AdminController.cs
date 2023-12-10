@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApplication3.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication3.Controllers
 {
@@ -48,10 +48,14 @@ namespace WebApplication3.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(News news, IFormFile generalImage)
-        {
+        public IActionResult Create(string title, DateTime date, string text, IFormFile generalImage)
+        { 
             if (generalImage != null && generalImage.Length > 0)
             {
+                News news = new News();
+                news.Title = title;
+                news.Date = date;
+                news.FullText = text;
                 var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
                 if (!Directory.Exists(uploadsFolder))
                 {
@@ -64,10 +68,11 @@ namespace WebApplication3.Controllers
                     generalImage.CopyTo(fileStream);
                 }
                 news.ImageUrl = "/images/" + uniqueFileName;
+                _siteContext.News.Add(news);
+                _siteContext.SaveChanges();
+                return RedirectToAction("Index");
             }
-            _siteContext.News.Add(news);
-            _siteContext.SaveChanges();
-            return RedirectToAction("Index");
+            return View();
         }
 
         [HttpPost]

@@ -58,11 +58,12 @@
         </nav>
     </header>
     <div style="margin-left: 50px; margin-right: 50px;">
+        <input type="hidden" id="my-data" value="@Model.FullText" />
         <h1>@Model.Title</h1>
         <img src="@Model.ImageUrl" alt="@Model.Title" />
         <p>@Model.Date.ToShortDateString()</p>
-        <span style="white-space: pre-line">@Model.FullText</span>
-        <h3 style="margin-top:10px">Comments:</h3>
+        <iframe id="output"></iframe>
+        <h3 style="margin-top:0px">Comments:</h3>
         <h4>@Model.Comments.Count comment(s)</h4>
         @foreach(var comment in Model.Comments)
         {
@@ -86,6 +87,7 @@
         {
             <h5>Log in to leave a comment!</h5>
         }
+        <script src="~/js/details.js"></script>
     </div>
 </body>
 </html>

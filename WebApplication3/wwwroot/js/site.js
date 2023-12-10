@@ -1,4 +1,10 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿let editor;
 
-// Write your JavaScript code.
+ClassicEditor
+    .create(document.querySelector('#editor'))
+    .then(newEditor => {
+        editor = newEditor;
+    })
+    .catch(error => {
+        console.error(error);
+    });

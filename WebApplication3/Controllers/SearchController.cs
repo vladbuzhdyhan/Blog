@@ -16,7 +16,7 @@ namespace WebApplication3.Controllers
         }
         public IActionResult Find(string title)
         {
-            var found = _siteContext.News.Where(x => x.Title == title).OrderByDescending(x => x.Date).ToList();
+            var found = _siteContext.News.Where(x => x.Title.Contains(title)).OrderByDescending(x => x.Date).ToList();
             return View(found);
         }
     }

@@ -8,6 +8,8 @@
     <title>Blog</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>*@
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 </head>
 <body>
     <header>
@@ -34,25 +36,26 @@
             </div>
         </nav>
     </header>
-    <form asp-controller="Admin" asp-action="Create" method="post" enctype="multipart/form-data">
+    <form id="newsForm" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <label asp-for="Title">Post title</label>
-            <input asp-for="Title" class="form-control" />
+            <label for="title">Post title</label>
+            <input type="text" id="title" name="title" />
         </div>
         <div class="form-group">
-            <label asp-for="Date">Date</label>
-            <input asp-for="Date" class="form-control" />
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" />
         </div>
         <div class="form-group">
-            <label asp-for="FullText">Text</label>
-            <textarea asp-for="FullText" class="form-control"></textarea>
+            <label>Text</label>
+            <textarea name="text" id="editor"></textarea>
         </div>
         <div>
             <label for="generalImage">Download image:</label>
             <input type="file" id="generalImage" name="generalImage" />
-        </div>
+        </div> 
         <button type="submit" class="btn btn-primary">Save</button>
         <a asp-action="Index" class="btn btn-secondary">Cancel</a>
     </form>
+    <script src="~/js/site.js"></script>
 </body>
 </html>
