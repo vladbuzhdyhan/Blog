@@ -8,6 +8,7 @@
     <title>Blog</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 </head>
 <body>
     <header>
@@ -36,6 +37,7 @@
     </header>
     <form asp-controller="Admin" asp-action="Edit" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
+        <input type="hidden" id="my-data" asp-for="FullText" />
         <div class="form-group">
             <label asp-for="Title" class="control-label">Post Title</label>
             <input asp-for="Title" class="form-control" />
@@ -47,18 +49,18 @@
             <span asp-validation-for="Date" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="FullText" class="control-label">Text</label>
-            <textarea asp-for="FullText" class="form-control" rows="4"></textarea>
-            <span asp-validation-for="FullText" class="text-danger"></span>
+            <label>Post Text</label>
+            <textarea name="text" id="editor"></textarea>
         </div>
-        <div>
+        <div class="form-group">
             <label for="generalImage">Download image:</label>
-            <input type="file" id="generalImage" name="generalImage" />
+            <input type="file" id="generalImage" name="generalImage" class="form-control" />
         </div>
         <div class="form-group">
             <input type="submit" value="Save" class="btn btn-primary" />
             <a asp-action="Index" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
+    <script src="~/js/edit.js"></script>
 </body>
 </html>

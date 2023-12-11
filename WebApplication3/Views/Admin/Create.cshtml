@@ -8,7 +8,6 @@
     <title>Blog</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    @*<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>*@
     <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 </head>
 <body>
@@ -39,19 +38,19 @@
     <form id="newsForm" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Post title</label>
-            <input type="text" id="title" name="title" />
+            <input type="text" id="title" name="title" class="form-control" />
         </div>
         <div class="form-group">
             <label for="date">Date</label>
-            <input type="date" id="date" name="date" />
+            <input type="date" id="date" name="date" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Text</label>
+            <label>Post Text</label>
             <textarea name="text" id="editor"></textarea>
         </div>
-        <div>
+        <div class="form-group">
             <label for="generalImage">Download image:</label>
-            <input type="file" id="generalImage" name="generalImage" />
+            <input type="file" id="generalImage" name="generalImage" class="form-control" />
         </div> 
         <button type="submit" class="btn btn-primary">Save</button>
         <a asp-action="Index" class="btn btn-secondary">Cancel</a>

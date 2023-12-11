@@ -39,8 +39,7 @@ body {
 }
 
 .card-img-left {
-    height: 300px;
-    width: 300px;
+    max-height: 200px;
     margin-right: 20px;
 }
 

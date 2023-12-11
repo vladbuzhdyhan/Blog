@@ -77,7 +77,7 @@ namespace WebApplication3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, News editedNews, IFormFile generalImage)
+        public IActionResult Edit(int id, string text, News editedNews, IFormFile generalImage)
         {
             if (id != editedNews.Id)
             {
@@ -103,7 +103,7 @@ namespace WebApplication3.Controllers
                 }
                 existingNews.Title = editedNews.Title;
                 existingNews.Date = editedNews.Date;
-                existingNews.FullText = editedNews.FullText;
+                existingNews.FullText = text;
                 _siteContext.SaveChanges();
                 return RedirectToAction("Index");
             }
