@@ -44,6 +44,9 @@
                 <td>
                     <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Manage roles</a>
                 </td>
+                <td>
+                    <a class="btn btn-sm btn-danger" asp-action="DeleteUser" asp-route-userid="@user.Id">Delete</a>
+                </td>
             </tr>
         }
     </table>

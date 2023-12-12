@@ -71,7 +71,7 @@
                 <p class="comment-sender">@comment.SenderName</p>
                 <p class="comment-date">@comment.Date</p>
                 <p class="comment-text">@comment.Text</p>
-                @if (comment.SenderId == UserManager.GetUserId(User) || User.IsInRole("Admin"))
+                @if (comment.SenderId == UserManager.GetUserId(User) || User.IsInRole("Admin") || User.IsInRole("Moderator"))
                 {
                     <form asp-action="Delete" asp-route-id="@comment.Id" method="post">
                         <input type="hidden" name="newsId" value="@Model.Id" />

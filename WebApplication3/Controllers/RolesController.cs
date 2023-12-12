@@ -11,10 +11,12 @@ namespace WebApplication3.Controllers
     {
         RoleManager<IdentityRole> _roleManager;
         UserManager<User> _userManager;
-        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        SiteContext _siteContext;
+        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager, SiteContext siteContext)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _siteContext = siteContext;
         }
         public IActionResult Index() => View(_roleManager.Roles.ToList());
 
@@ -49,6 +51,19 @@ namespace WebApplication3.Controllers
                 IdentityResult result = await _roleManager.DeleteAsync(role);
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+                var comments = _siteContext.Comments.Where(x => x.SenderId == userId);
+                _siteContext.RemoveRange(comments);
+                _siteContext.SaveChanges();
+            }
+            return RedirectToAction("UserList");
         }
 
         public IActionResult UserList() => View(_userManager.Users.ToList());
