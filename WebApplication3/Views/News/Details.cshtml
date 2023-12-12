@@ -62,7 +62,7 @@
         <h1>@Model.Title</h1>
         <img src="@Model.ImageUrl" alt="@Model.Title" />
         <p>@Model.Date.ToString()</p>
-        <iframe id="output" style="height: 5px"></iframe>
+        <iframe id="output" style="height: 5px; width: 100%"></iframe>
         <h3 style="margin-top:0px">Comments:</h3>
         <h4>@Model.Comments.Count comment(s)</h4>
         @foreach(var comment in Model.Comments)

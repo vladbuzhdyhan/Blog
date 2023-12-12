@@ -13,5 +13,4 @@ style.textContent = `
 iframeDocument.head.appendChild(style);
 
 const iframeBody = output.contentDocument.body;
-output.style.width = iframeBody.scrollWidth + "px";
 output.style.height = iframeBody.scrollHeight + "px";

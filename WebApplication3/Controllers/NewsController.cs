@@ -7,7 +7,6 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
-    [Route("[controller]")]
     public class NewsController : Controller
     {
         private readonly SiteContext _siteContext;
@@ -18,8 +17,6 @@ namespace WebApplication3.Controllers
             _siteContext = sitecontext;
             _userManager = userManager;
         }
-
-        [Route("{slug}")]
         public IActionResult Details(int id)
         {
             var newsItem = _siteContext.News.FirstOrDefault(n => n.Id == id);
@@ -47,7 +44,7 @@ namespace WebApplication3.Controllers
 
         public IActionResult Delete(int id, int newsId)
         {
-            var comment = _siteContext.Comments.First(x => x.Id == id);
+            var comment = _siteContext.Comments.FirstOrDefault(x => x.Id == id);
             _siteContext.Comments.Remove(comment);
             _siteContext.SaveChanges();
             return RedirectToAction("Details", new {id = newsId});

@@ -25,7 +25,7 @@ namespace WebApplication3.Controllers
         public IActionResult Delete(int id)
         {
             var comments = _siteContext.Comments.Where(x => x.NewsId == id);
-            var newsItem = _siteContext.News.First(n => n.Id == id);
+            var newsItem = _siteContext.News.FirstOrDefault(n => n.Id == id);
             var absolutePath = Path.Combine(_webHostEnvironment.WebRootPath, newsItem.ImageUrl.TrimStart('/'));
             System.IO.File.Delete(absolutePath);
             _siteContext.News.Remove(newsItem);
