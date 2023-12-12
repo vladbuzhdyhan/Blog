@@ -19,7 +19,8 @@ namespace WebApplication3.Models
     {
         public int Id { get; set; }
         public int NewsId { get; set; }
-        public string? Sender { get; set; }
+        public string SenderId { get; set; }
+        public string SenderName { get; set; }
         public string? Text { get; set; }
         public DateTime Date { get; set; }
     }

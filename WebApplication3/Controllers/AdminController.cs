@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication3.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication3.Controllers
 {
@@ -26,7 +25,9 @@ namespace WebApplication3.Controllers
         public IActionResult Delete(int id)
         {
             var comments = _siteContext.Comments.Where(x => x.NewsId == id);
-            var newsItem = _siteContext.News.FirstOrDefault(n => n.Id == id);
+            var newsItem = _siteContext.News.First(n => n.Id == id);
+            var absolutePath = Path.Combine(_webHostEnvironment.WebRootPath, newsItem.ImageUrl.TrimStart('/'));
+            System.IO.File.Delete(absolutePath);
             _siteContext.News.Remove(newsItem);
             _siteContext.Comments.RemoveRange(comments);
             _siteContext.SaveChanges();
@@ -49,7 +50,7 @@ namespace WebApplication3.Controllers
 
         [HttpPost]
         public IActionResult Create(string title, DateTime date, string text, IFormFile generalImage)
-        { 
+        {
             if (generalImage != null && generalImage.Length > 0)
             {
                 News news = new News();
@@ -79,36 +80,29 @@ namespace WebApplication3.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, string text, News editedNews, IFormFile generalImage)
         {
-            if (id != editedNews.Id)
-            {
-                return NotFound();
-            }
             var existingNews = _siteContext.News.FirstOrDefault(n => n.Id == id);
-            if (existingNews != null)
+            if (generalImage != null && generalImage.Length > 0)
             {
-                if (generalImage != null && generalImage.Length > 0)
+                var absolutePath = Path.Combine(_webHostEnvironment.WebRootPath, existingNews.ImageUrl.TrimStart('/'));
+                System.IO.File.Delete(absolutePath);
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                if (!Directory.Exists(uploadsFolder))
                 {
-                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                    if (!Directory.Exists(uploadsFolder))
-                    {
-                        Directory.CreateDirectory(uploadsFolder);
-                    }
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + generalImage.FileName;
-                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        generalImage.CopyTo(fileStream);
-                    }
-                    existingNews.ImageUrl = "/images/" + uniqueFileName;
+                    Directory.CreateDirectory(uploadsFolder);
                 }
-                existingNews.Title = editedNews.Title;
-                existingNews.Date = editedNews.Date;
-                existingNews.FullText = text;
-                _siteContext.SaveChanges();
-                return RedirectToAction("Index");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + generalImage.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    generalImage.CopyTo(fileStream);
+                }
+                existingNews.ImageUrl = "/images/" + uniqueFileName;
             }
-            return View(editedNews);
+            existingNews.Title = editedNews.Title;
+            existingNews.Date = editedNews.Date;
+            existingNews.FullText = text;
+            _siteContext.SaveChanges();
+            return RedirectToAction("Index");
         }
-
     }
 }

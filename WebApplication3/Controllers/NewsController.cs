@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -9,10 +10,12 @@ namespace WebApplication3.Controllers
     public class NewsController : Controller
     {
         private readonly SiteContext _siteContext;
+        private readonly UserManager<User> _userManager;
 
-        public NewsController(SiteContext sitecontext)
+        public NewsController(SiteContext sitecontext, UserManager<User> userManager)
         {
             _siteContext = sitecontext;
+            _userManager = userManager;
         }
 
         public IActionResult Details(int id)
@@ -32,10 +35,19 @@ namespace WebApplication3.Controllers
                 comment.NewsId = newsId;
                 comment.Text = text;
                 comment.Date = DateTime.Now;
-                comment.Sender = User.Identity?.Name;
+                comment.SenderId = _userManager.GetUserId(User);
+                comment.SenderName = User.Identity.Name;
                 news.Comments.Add(comment);
                 _siteContext.SaveChanges();
             }
+            return RedirectToAction("Details", new {id = newsId});
+        }
+
+        public IActionResult Delete(int id, int newsId)
+        {
+            var comment = _siteContext.Comments.First(x => x.Id == id);
+            _siteContext.Comments.Remove(comment);
+            _siteContext.SaveChanges();
             return RedirectToAction("Details", new {id = newsId});
         }
     }

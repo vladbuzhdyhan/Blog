@@ -39,7 +39,7 @@ body {
 }
 
 .card-img-left {
-    max-height: 200px;
+    max-width: 200px;
     margin-right: 20px;
 }
 
@@ -59,4 +59,8 @@ body {
 
 .btn-primary {
     border: none;
+}
+
+.col-md-4 {
+    margin: 5px;
 }

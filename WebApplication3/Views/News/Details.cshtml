@@ -62,15 +62,24 @@
         <h1>@Model.Title</h1>
         <img src="@Model.ImageUrl" alt="@Model.Title" />
         <p>@Model.Date.ToString()</p>
-        <iframe id="output"></iframe>
+        <iframe id="output" style="height: 5px"></iframe>
         <h3 style="margin-top:0px">Comments:</h3>
         <h4>@Model.Comments.Count comment(s)</h4>
         @foreach(var comment in Model.Comments)
         {
             <div class="comment-container">
-                <p class="comment-sender">@comment.Sender</p>
+                <p class="comment-sender">@comment.SenderName</p>
                 <p class="comment-date">@comment.Date</p>
                 <p class="comment-text">@comment.Text</p>
+                @if (comment.SenderId == UserManager.GetUserId(User) || User.IsInRole("Admin"))
+                {
+                    <form asp-action="Delete" asp-route-id="@comment.Id" method="post">
+                        <input type="hidden" name="newsId" value="@Model.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                }
             </div>
         }
         @if (SignInManager.IsSignedIn(User))
