@@ -32,15 +32,18 @@ body {
     align-items: center;
 }
 
-
 /**/
 .card-body {
     display: flex;
 }
 
 .card-img-left {
-    max-width: 200px;
-    margin-right: 20px;
+    height: 250px;
+    width: 250px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    object-fit: cover;
 }
 
 .card-title {
@@ -57,10 +60,17 @@ body {
         color: #999;
     }
 
-.btn-primary {
-    border: none;
+.col-md-4 {
+    flex: 0 0 31%; /* Set flex basis to 33.333% for a three-column layout */
+    max-width: 31%;
+    box-sizing: border-box; /* Include padding and border in the box model */
+    padding-right: 15px; /* Add right padding to account for negative margin in the row */
+    padding-left: 15px;
 }
 
-.col-md-4 {
-    margin: 5px;
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -1.5%;
+    margin-left: -1.5%;
 }

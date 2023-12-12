@@ -7,6 +7,7 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
+    [Route("[controller]")]
     public class NewsController : Controller
     {
         private readonly SiteContext _siteContext;
@@ -18,6 +19,7 @@ namespace WebApplication3.Controllers
             _userManager = userManager;
         }
 
+        [Route("{slug}")]
         public IActionResult Details(int id)
         {
             var newsItem = _siteContext.News.FirstOrDefault(n => n.Id == id);

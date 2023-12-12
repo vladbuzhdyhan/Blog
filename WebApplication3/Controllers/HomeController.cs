@@ -15,7 +15,7 @@ namespace WebApplication3.Controllers
 
         public IActionResult Index()
         {
-            var news = _siteContext.News.OrderByDescending(n => n.Date).Take(6).ToList();
+            var news = _siteContext.News.OrderByDescending(n => n.Date).Take(9).ToList();
             return View(news);
         }
     }
